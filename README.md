@@ -4,7 +4,7 @@ Unmock allows you to property test APIs. To understand if this is a good fit for
 
 ## Property testing 101
 
-Property testing makes sense when you are uncertain about they type of content that a given function will receive. For example, the given function is a poor candidate for property testing.
+Property testing makes sense when you are uncertain about they type of content that a given function will receive or how that content will be transformed into a response. For example, the given function is a poor candidate for property testing.
 
 ```ts
 const onlyAcceptsTwoThenAddsOne = (n: number) {
