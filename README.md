@@ -126,7 +126,7 @@ test("tests name update does not crash because of analytics api" => () {
 
 ### Chaos
 
-In some (unfortnately not so) rare circumstances, an API will be so erratic that you cannot trust it to behave correctly. In this case, chaos is your friend. While there are many chaos testing libraries available, `unmock.pt.chaos` introduces a modicum of chaos only for a specific API call, returning *anything* (wrong content length, wrong body structure, etc.). In general, `chaos` is your friend if you want to make sure that part of your code base is resilient.
+In some (unfortnately not so) rare circumstances, an API will be so erratic that you cannot trust it to behave correctly. In this case, [Chaos isn't a pit. Chaos is a ladder.](https://www.youtube.com/watch?v=iRS8a8HjqFs) While there are many chaos testing libraries available, `unmock.pt.chaos` introduces a modicum of chaos only for a specific API call, returning *anything* (wrong content length, wrong body structure, etc.). In general, `chaos` is your friend if you want to make sure that part of your code base is resilient.
 
 ```ts
 // updatesName.test.ts
