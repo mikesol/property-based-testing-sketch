@@ -204,7 +204,7 @@ describe('properties', () => {
 });
 ```
 
-You'll see that, in the examples above, `unmock.pt.X()` does not inject anything into the `fast-check` function, but rather instructs unmock to behave a certain way in the context of a test. This can also be useful for composing functions - for example, when you want to test a certain API fails whereas another one succeeds.  The astute reader will note that this is the same as `unmock.pt.compose`.
+You'll see that, in the examples above, `unmock.pt.X()` does not inject anything into the `fast-check` function, but rather instructs unmock to behave a certain way in the context of a test. This can also be useful for composing functions - for example, when you want to test a certain API fails whereas another one succeeds.  The astute reader will note that this is the same as [`unmock.pt.compose`](#composition).
 
 ```ts
 // Properties
