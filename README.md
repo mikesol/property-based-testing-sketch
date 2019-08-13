@@ -113,7 +113,7 @@ Great! We found that our test fails because our API can, contrary to our expecta
 
 In certain cases, it is good to simulate APIs returning any valid response. Or, in other words, the API behaves "nicely," meaning that even when it fails, it fails the way it is expected to fail. This is especially useful when success and failure should lead to the same outcome. For example, if you are posting information to a non-critical API that has no bearing on UX, you may want to simultaneously test success and failure.
 
-Let's look at the function `updateName` again. You'll notice that there is a call to `sendAnalyticsEvent`. Let's allow it to return any valid response.  Here, we also see a nifty feature of `unmock.pt` - the ability to specify a given API, just like the `states` object.
+If you look at the function `updateName` again, you'll notice that there is a call to `sendAnalyticsEvent`. Let's allow it to return any valid response.  Here, we also see a nifty feature of `unmock.pt` - the ability to specify a given API, just like the `states` object.
 
 ```ts
 // updatesName.test.ts
