@@ -17,7 +17,7 @@ const onlyAcceptsTwoThenAddsOne = (n: number) {
 
 The function's name, error, and return result makes us pretty confident that two use cases (ie `onlyAcceptsTwoThenAddsOne(2)` and `onlyAcceptsTwoThenAddsOne(-42)`) will sufficiently test `onlyAcceptsTwoThenAddsOne`.
 
-Most trivial functions that have no IO are poor candidates for property testing. However, when the function contains several `if/else` branches, or when the function's input can vary drastically because we have no control over it, property testing can find nasty corner cases in milliseconds.
+Most trivial functions that have no IO should not be property tested. However, when the function contains several `if/else` branches, or when the function's input can vary drastically because we have no control over it, property testing can find nasty corner cases in milliseconds.
 
 API integrations are generally good candidates for property testing. Unless the API is something like `always-return-two.com` or `unauthorized.io`, chances are that its responses can be subtly different. In this case, simple property tests can save weeks of debugging time down the line!
 
