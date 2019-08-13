@@ -211,7 +211,7 @@ You'll see that, in the examples above, `unmock.pt.X()` does not inject anything
 describe('properties', () => {
   // string text always contains itself
   it('should always contain itself', () => {
-    fc.assert(fc.property(unmock.pt.success.api0(), unmock.pt.success.api1(), fc.string(), text => foo(text)));
+    fc.assert(fc.property(unmock.pt.success.api0(), unmock.pt.chaos.api1(), fc.string(), text => foo(text)));
   });
 });
 ```
