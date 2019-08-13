@@ -73,9 +73,9 @@ We can now test just these specific points of failure to drill to the bottom of 
 
 ```ts
 // updatesName.test.ts
-test("tests name update failure" => () {
+test("tests name update failure" => async () {
   unmock.pt.fails(['EADDRNOTAVAIL', 501], async () => {
-    const res = updatesNicknameAPI('bob');
+    const res = await updatesNicknameAPI('bob');
     expect(typeof res).toBe("string");
   });
 });
@@ -87,9 +87,9 @@ Similarly to the failure scenario, unmock can also test only successful outcomes
 
 ```ts
 // updatesName.test.ts
-test("tests name update success" => () {
+test("tests name update success" => async () {
   unmock.pt.succeeds(async () => {
-    const res = updatesNicknameAPI('bob');
+    const res = await updatesNicknameAPI('bob');
     expect(Object.keys(res)).toBe(['id','name','avatar','location']);
   });
 });
@@ -119,7 +119,7 @@ If you look at the function `updateName` again, you'll notice that there is a ca
 // updatesName.test.ts
 test("tests name update does not crash because of analytics api" => () {
   unmock.pt.nice.analytics(async () => {
-    updatesNicknameAPI('bob');
+    await updatesNicknameAPI('bob');
   });
 });
 ```
@@ -132,14 +132,27 @@ In some (unfortnately not so) rare circumstances, an API will be so erratic that
 // updatesName.test.ts
 test("tests name update does not crash because of flaky analytics API" => () {
   unmock.pt.chaos.analytics(async () => {
-    updatesNicknameAPI('bob');
+    await updatesNicknameAPI('bob');
   });
 });
 ```
 
-### Unmock and `fast-check`
+### Composition
 
-[`fast-check`](https://www.npmjs.com/package/fast-check) is a popular JavaScript property testing library. `unmock.fc` is a `fast-check` interoperable package that extends `fast-check` to include API-based property testing in normal property testing.
+Sometimes, you will want your property testing to compose various different behaviors. For exmaple, API A will always fail whereas API B will always succeed. To achieve this, you can use `unmock.pt.compose`.
+
+```ts
+// updatesName.test.ts
+test("tests name update does not crash because of flaky analytics API" => () {
+  unmock.pt.compose(unmock.pt.success.apiB(), unmock.pt.failure.apiA(), async () => {
+    myFunction();
+  });
+});
+```
+
+## Unmock and `fast-check`
+
+[`fast-check`](https://www.npmjs.com/package/fast-check) is a popular JavaScript property testing library. `unmock` is interoperable with `fast-check`.
 
 Let's consider the following example from the `fast-check` documentation.
 
@@ -187,6 +200,18 @@ describe('properties', () => {
   // contains returns false when API is broken
   it('should always contain its substrings', () => {
     fc.assert(fc.property(unmock.pt.failure(), fc.string(), text => contains(text, text) == -1));
+  });
+});
+```
+
+You'll see that, in the examples above, `unmock.pt.X()` does not inject anything into the `fast-check` function, but rather instructs unmock to behave a certain way in the context of a test. This can also be useful for composing functions - for example, when you want to test a certain API fails whereas another one succeeds.  The astute reader will note that this is the same as `unmock.pt.compose`.
+
+```
+// Properties
+describe('properties', () => {
+  // string text always contains itself
+  it('should always contain itself', () => {
+    fc.assert(fc.property(unmock.pt.success.api0(), unmock.pt.success.api1(), fc.string(), text => foo(text)));
   });
 });
 ```
